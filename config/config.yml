@@ -1,0 +1,43 @@
+server:
+  port: 3000
+  host: "localhost"
+  session_secret: "your-session-secret"
+
+database:
+  mongodb_uri: "mongodb://localhost:27017/hex-share"
+
+discord:
+  bot_token: "Yout Bot Token"
+  client_id: "Your Client ID"
+  client_secret: "Your Client Secret"
+  callback_url: "http://localhost:3000/auth/discord/callback"
+  guild_id: "Your Guild ID"
+  logChannelId: "Your Log Channel ID"
+  botIconUrl: "https://hexarion.net/Hex-L-T.png"
+  embedColor: "#6366f1"
+
+storage:
+  upload_dir: "./uploads"
+  max_file_size: 100000000 # 100MB
+  allowed_types:
+    - "image/*"
+    - "application/pdf"
+    - "application/zip"
+    - "text/*"
+
+admin:
+  default_admin_ids:
+    - "392855285263499274"
+
+# Footer Configuration
+footer:
+  company_name: "Hex Share"
+  tagline: "Next-Gen File Sharing"
+  social_links:
+    github: "https://github.com/Hexarion1"
+    discord: "https://discord.gg/yourserver"
+    twitter: "https://twitter.com/youraccount"
+  links:
+    privacy: "/privacy"
+    terms: "/terms"
+    contact: "/contact"

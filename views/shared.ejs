@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex Share - Shared File</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <div id="particles-js" class="particle-background"></div>
+        <div class="dashboard-container glass-effect">
+            <div class="dashboard-header glass-effect">
+                <div class="welcome-section">
+                    <span class="greeting-tag shine-effect">Shared Content</span>
+                    <h1 class="gradient-text">Shared File</h1>
+                    <p>This file has been shared with you</p>
+                </div>
+            </div>
+            <div id="notification-container"></div>
+
+            <div class="shared-content">
+                <div class="shared-file-card glass-effect hover-lift">
+                    <div class="shared-preview glow-effect">
+                        <% if (file.type.startsWith('image/')) { %>
+                            <img src="/files/preview/<%= file._id %>" alt="<%= file.name %>" class="preview-image">
+                        <% } else if (file.type.startsWith('video/')) { %>
+                            <div class="video-preview">
+                                <i class="fas fa-play-circle"></i>
+                                <video src="/files/preview/<%= file._id %>" preload="metadata"></video>
+                            </div>
+                        <% } else { %>
+                            <i class="fas <%= getFileIcon(file.type) %>"></i>
+                        <% } %>
+                    </div>
+                    <div class="shared-info">
+                        <h4><%= file.name %></h4>
+                        <p class="file-meta">
+                            <%= formatBytes(file.size) %> • Shared by <%= file.owner.username %>
+                        </p>
+                    </div>
+                    <div class="file-actions">
+                        <button class="action-btn hover-lift" onclick="downloadSharedFile('<%= file._id %>')">
+                            <i class="fas fa-download"></i>
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/footer') %>
+    <script src="/js/notifications.js"></script>
+    <script src="/js/particles.js"></script>
+    <script>
+        function downloadSharedFile(fileId) {
+            notifications.show('Download Started', 'Your file download will begin shortly', 'info');
+            window.location.href = `/files/download/${fileId}`;
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex Share - Files</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <div id="particles-js" class="particle-background"></div>
+        <div class="dashboard-container glass-effect">
+            <nav class="main-nav glass-effect">
+                <div class="nav-content">
+                    <div class="nav-brand">
+                        <h2 class="gradient-text">Hex Share</h2>
+                        <button class="hamburger-btn shine-effect">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="nav-links">
+                        <button class="nav-btn shine-effect" onclick="window.location.href='/dashboard'">
+                            <i class="fas fa-home"></i>
+                            Dashboard
+                        </button>
+                        
+                        <button class="nav-btn shine-effect" onclick="window.location.href='/files'">
+                            <i class="fas fa-folder"></i>
+                            Files
+                        </button>
+                        
+                        <% if (config.admin.default_admin_ids.includes(user.discordId)) { %>
+                            <button class="nav-btn shine-effect" onclick="window.location.href='/admin'">
+                                <i class="fas fa-shield-alt"></i>
+                                Admin Panel
+                            </button>
+                        <% } %>
+                        
+                        <button class="nav-btn shine-effect" onclick="window.location.href='/auth/logout'">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </nav>
+            <div id="notification-container"></div>
+            <div class="dashboard-header glass-effect">
+                <div class="welcome-section">
+                    <span class="greeting-tag shine-effect">File Management</span>
+                    <h1 class="gradient-text">Your Files</h1>
+                    <p>Manage and share your files securely</p>
+                    
+                    <div class="files-actions">
+                        <div class="search-bar glass-effect">
+                            <i class="fas fa-search glow-effect"></i>
+                            <input type="text" placeholder="Search files..." class="search-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="files-grid">
+                <% files.forEach(file => { %>
+                    <div class="file-card glass-effect hover-lift">
+                        <div class="file-preview glow-effect">
+                            <% if (file.type.startsWith('image/')) { %>
+                                <img src="/files/preview/<%= file._id %>" alt="<%= file.name %>" class="preview-image">
+                            <% } else if (file.type.startsWith('video/')) { %>
+                                <div class="video-preview">
+                                    <i class="fas fa-play-circle"></i>
+                                    <video src="/files/preview/<%= file._id %>" preload="metadata"></video>
+                                </div>
+                            <% } else { %>
+                                <i class="fas <%= getFileIcon(file.type) %>"></i>
+                            <% } %>
+                        </div>
+                        <div class="file-info">
+                            <h4><%= file.name %></h4>
+                            <p class="file-meta">
+                                <%= formatBytes(file.size) %> • <%= formatDate(file.uploadedAt) %>
+                            </p>
+                        </div>
+                        <div class="file-actions">
+                            <button class="action-btn hover-lift" onclick="downloadFile('<%= file._id %>')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="action-btn hover-lift" onclick="shareFile('<%= file._id %>')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                            <button class="action-btn hover-lift danger" onclick="deleteFile('<%= file._id %>')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div> 
+    <%- include('partials/footer') %>
+    <script src="/js/files.js"></script>
+    <script src="/js/particles.js"></script>
+    <script src="/js/notifications.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.querySelector('.hamburger-btn');
+            const mobileMenu = document.querySelector('.nav-links');
+        
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('active');
+            }
+        
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        });
+        </script>          
+</body>
+</html>

@@ -1,0 +1,36 @@
+<footer class="main-footer glass-effect">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <h3 class="gradient-text"><%= config.footer.company_name %></h3>
+            <p><%= config.footer.tagline %></p>
+        </div>
+        
+        <div class="footer-links">
+            <div class="footer-section">
+                <h4>Links</h4>
+                <a href="<%= config.footer.links.privacy %>" class="footer-link shine-effect">Privacy Policy</a>
+                <a href="<%= config.footer.links.terms %>" class="footer-link shine-effect">Terms of Service</a>
+                <a href="<%= config.footer.links.contact %>" class="footer-link shine-effect">Contact</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <a href="<%= config.footer.social_links.github %>" class="social-link shine-effect">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="<%= config.footer.social_links.discord %>" class="social-link shine-effect">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="<%= config.footer.social_links.twitter %>" class="social-link shine-effect">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>© <%= new Date().getFullYear() %> <%= config.footer.company_name %>. All rights reserved.</p>
+    </div>
+</footer>

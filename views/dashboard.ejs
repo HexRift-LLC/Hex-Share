@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex Share - Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <div id="particles-js" class="particle-background"></div>
+        <div class="dashboard-container glass-effect">
+            <nav class="main-nav glass-effect">
+                <div class="nav-content">
+                    <div class="nav-brand">
+                        <h2 class="gradient-text">Hex Share</h2>
+                        <button class="hamburger-btn shine-effect">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="nav-links">
+                        <button class="nav-btn shine-effect" onclick="window.location.href='/dashboard'">
+                            <i class="fas fa-home"></i>
+                            Dashboard
+                        </button>
+                        
+                        <button class="nav-btn shine-effect" onclick="window.location.href='/files'">
+                            <i class="fas fa-folder"></i>
+                            Files
+                        </button>
+                        
+                        <% if (config.admin.default_admin_ids.includes(user.discordId)) { %>
+                            <button class="nav-btn shine-effect" onclick="window.location.href='/admin'">
+                                <i class="fas fa-shield-alt"></i>
+                                Admin Panel
+                            </button>
+                        <% } %>
+                        
+                        <button class="nav-btn shine-effect" onclick="window.location.href='/auth/logout'">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </nav>
+            <div id="notification-container"></div>
+            <div class="dashboard-header glass-effect">
+                <div class="welcome-section">
+                    <span class="greeting-tag shine-effect">Dashboard Overview</span>
+                    <h1 class="gradient-text">Welcome back, <%= user.username %></h1>
+                    <div class="user-stats">
+                        <% if (user.tier === 'premium') { %>
+                            <div class="tier-badge premium-badge shine-effect">
+                                <i class="fas fa-crown"></i>
+                                Premium Elite
+                            </div>
+                        <% } else if (user.tier === 'standard') { %>
+                            <div class="tier-badge standard-badge shine-effect">
+                                <i class="fas fa-star"></i>
+                                Standard Plus
+                            </div>
+                        <% } else { %>
+                            <div class="tier-badge free-badge shine-effect">
+                                <i class="fas fa-user"></i>
+                                Free User
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="stats-grid">
+                <div class="stat-card glass-effect hover-lift">
+                    <div class="stat-icon glow-effect">
+                        <i class="fas fa-hdd"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Storage Space</span>
+                        <div class="stat-value gradient-text"><%= formatBytes(user.storageUsed) %></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill shine-effect" 
+                                 style="width: <%= (user.storageUsed / user.storageLimit) * 100 %>%">
+                            </div>
+                        </div>
+                        <span class="stat-detail">of <%= formatBytes(user.storageLimit) %> allocated</span>
+                    </div>
+                </div>
+    
+                <div class="stat-card glass-effect hover-lift">
+                    <div class="stat-icon glow-effect">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">File Count</span>
+                        <div class="stat-value gradient-text"><%= user.totalFiles %></div>
+                        <span class="stat-detail">Files in your vault</span>
+                    </div>
+                </div>
+    
+                <div class="stat-card glass-effect hover-lift">
+                    <div class="stat-icon glow-effect">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Active Shares</span>
+                        <div class="stat-value gradient-text"><%= user.activeShares %></div>
+                        <span class="stat-detail">Shared with others</span>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="upload-section glass-effect">
+                <div class="upload-area hover-lift" id="dropZone">
+                    <div class="upload-icon glow-effect">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3 class="upload-title gradient-text">Upload Files</h3>
+                    <p class="upload-description">Drag and drop your files here or <span class="gradient-text">browse</span></p>
+                    <input type="file" id="fileInput" multiple hidden>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/footer') %>
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/particles.js"></script>
+    <script src="/js/notifications.js"></script>
+    <script>
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.querySelector('.hamburger-btn');
+            const mobileMenu = document.querySelector('.nav-links');
+        
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('active');
+            }
+        
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        });
+        </script>
+        
+        
+</body>
+</html>
