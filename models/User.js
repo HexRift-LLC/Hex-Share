@@ -14,20 +14,5 @@ const userSchema = new mongoose.Schema({
         ref: 'File'
     }],
     createdAt: { type: Date, default: Date.now },
-    tier: {
-        type: String,
-        enum: ['free', 'standard', 'premium'],
-        default: 'free'
-    },
-    storageLimit: {
-        type: Number,
-        default: function() {
-            switch(this.tier) {
-                case 'premium': return 1024 * 1024 * 1024 * 50; // 50GB
-                case 'standard': return 1024 * 1024 * 1024 * 10; // 10GB
-                default: return 1024 * 1024 * 1024 * 2; // 2GB
-            }
-        }
-    }
 });
 module.exports = mongoose.model('User', userSchema);

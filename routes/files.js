@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const { ensureAuthenticated } = require('../middleware/auth');
-const config = require('../config/config');
+const config = require('../middleware/config');
 const File = require('../models/File');
 const User = require('../models/User');
 const fs = require('fs').promises;
 const path = require('path');
 const crypto = require('crypto'); // Add this line
 const { sendLog } = require('../utils/discord');
+const { version } = require('../package.json');
 
 router.get('/', ensureAuthenticated, async (req, res) => {
     try {
@@ -17,6 +18,7 @@ router.get('/', ensureAuthenticated, async (req, res) => {
             user: req.user,
             config,
             files,
+            version: version,
             formatBytes: (bytes) => {
                 const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
                 if (bytes === 0) return '0 Byte';
@@ -166,6 +168,7 @@ router.get('/shared/:token', async (req, res) => {
         res.render('shared', {
             file,
             config,
+            version: version,
             formatBytes: (bytes) => {
                 const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
                 if (bytes === 0) return '0 Byte';

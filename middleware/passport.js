@@ -1,7 +1,7 @@
 const passport = require('passport');
 const DiscordStrategy = require('passport-discord').Strategy;
 const User = require('../models/User');
-const config = require('../config/config');
+const config = require('./config');
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -36,7 +36,6 @@ passport.use(new DiscordStrategy({
                 username: profile.username,
                 email: profile.email,
                 avatar: avatarURL,
-                isAdmin: config.admin.default_admin_ids.includes(profile.id),
                 storageLimit: 1024 * 1024 * 1024
             });
         } else {

@@ -33,13 +33,6 @@
                             Files
                         </button>
                         
-                        <% if (config.admin.default_admin_ids.includes(user.discordId)) { %>
-                            <button class="nav-btn shine-effect" onclick="window.location.href='/admin'">
-                                <i class="fas fa-shield-alt"></i>
-                                Admin Panel
-                            </button>
-                        <% } %>
-                        
                         <button class="nav-btn shine-effect" onclick="window.location.href='/auth/logout'">
                             <i class="fas fa-sign-out-alt"></i>
                             Logout
@@ -47,29 +40,20 @@
                     </div>
                 </div>
             </nav>
+
             <div id="notification-container"></div>
+
             <div class="dashboard-header glass-effect">
                 <div class="welcome-section">
                     <span class="greeting-tag shine-effect">Dashboard Overview</span>
                     <h1 class="gradient-text">Welcome back, <%= user.username %></h1>
                     <div class="user-stats">
-                        <% if (user.tier === 'premium') { %>
-                            <div class="tier-badge premium-badge shine-effect">
-                                <i class="fas fa-crown"></i>
-                                Premium Elite
-                            </div>
-                        <% } else if (user.tier === 'standard') { %>
-                            <div class="tier-badge standard-badge shine-effect">
-                                <i class="fas fa-star"></i>
-                                Standard Plus
-                            </div>
-                        <% } else { %>
-                            <div class="tier-badge free-badge shine-effect">
-                                <i class="fas fa-user"></i>
-                                Free User
-                            </div>
-                        <% } %>
+                        <div class="tier-badge <%= tier.badge_class %> shine-effect">
+                            <i class="fas <%= tier.icon %>"></i>
+                            <%= tier.name %>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
         
@@ -80,13 +64,13 @@
                     </div>
                     <div class="stat-info">
                         <span class="stat-label">Storage Space</span>
-                        <div class="stat-value gradient-text"><%= formatBytes(user.storageUsed) %></div>
+                        <div class="stat-value gradient-text"><%= formatBytes(user.storageUsed || 0) %></div>
                         <div class="progress-bar">
-                            <div class="progress-fill shine-effect" 
-                                 style="width: <%= (user.storageUsed / user.storageLimit) * 100 %>%">
+                            <div class="progress-fill shine-effect"
+                                 style="width: <%= (user.storageUsed / tier.storage_limit) * 100 %>%">
                             </div>
                         </div>
-                        <span class="stat-detail">of <%= formatBytes(user.storageLimit) %> allocated</span>
+                        <span class="stat-detail">of <%= formatBytes(tier.storage_limit) %> allocated</span>
                     </div>
                 </div>
     
@@ -125,12 +109,13 @@
             </div>
         </div>
     </div>
+
     <%- include('partials/footer') %>
+    
     <script src="/js/dashboard.js"></script>
     <script src="/js/particles.js"></script>
     <script src="/js/notifications.js"></script>
     <script>
-        // Mobile menu functionality
         document.addEventListener('DOMContentLoaded', () => {
             const mobileMenuBtn = document.querySelector('.hamburger-btn');
             const mobileMenu = document.querySelector('.nav-links');
@@ -141,8 +126,16 @@
         
             mobileMenuBtn.addEventListener('click', toggleMobileMenu);
         });
-        </script>
-        
-        
+    </script>
+        <% if (config.analytics.google.enabled) { %>
+            <!-- Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=<%= config.analytics.google.tracking_id %>"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '<%= config.analytics.google.tracking_id %>');
+            </script>
+        <% } %>
 </body>
 </html>

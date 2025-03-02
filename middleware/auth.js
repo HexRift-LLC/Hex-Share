@@ -1,4 +1,4 @@
-const config = require('../config/config');
+const config = require('./config');
 
 module.exports = {
     ensureAuthenticated: (req, res, next) => {
@@ -9,7 +9,7 @@ module.exports = {
     },
     
     ensureAdmin: (req, res, next) => {
-        if (req.isAuthenticated() && config.admin.default_admin_ids.includes(req.user.discordId)) {
+        if (req.isAuthenticated() && (req.user.discordId)) {
             return next();
         }
         res.redirect('/dashboard');

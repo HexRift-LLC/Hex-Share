@@ -1,11 +1,12 @@
 const router = require('express').Router();
 const { ensureAuthenticated } = require('../middleware/auth');
-const config = require('../config/config');
+const config = require('../middleware/config');
 const User = require('../models/User');
 const File = require('../models/File');
 const multer = require('multer');
 const path = require('path');
 const { sendLog } = require('../utils/discord');
+const { version } = require('../package.json');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -31,17 +32,31 @@ const upload = multer({
 router.get('/', ensureAuthenticated, async (req, res) => {
     try {
         const user = await User.findById(req.user._id);
+        
+        // Calculate total storage used from files
+        const userFiles = await File.find({ owner: user._id });
+        const storageUsed = userFiles.reduce((total, file) => total + file.size, 0);
+        
         const activeShares = await File.countDocuments({
             owner: user._id,
             shareToken: { $exists: true }
         });
 
+        // Get tier directly from config
+        const userTier = Object.values(config.tiers).find(tier => 
+            tier.users?.includes(user.discordId)
+        ) || config.tiers.free;
+
+        // Update storage usage
+        user.storageUsed = storageUsed;
         user.activeShares = activeShares;
         await user.save();
 
         res.render('dashboard', {
             user,
+            tier: userTier,
             config,
+            version: version,
             formatBytes: (bytes) => {
                 const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
                 if (bytes === 0) return '0 Byte';
@@ -50,10 +65,10 @@ router.get('/', ensureAuthenticated, async (req, res) => {
             }
         });
     } catch (err) {
+        console.error('Dashboard Error:', err);
         res.status(500).send('Server Error');
     }
 });
-
 router.post('/upload', ensureAuthenticated, upload.array('files'), async (req, res) => {
     try {
         const user = await User.findById(req.user._id);

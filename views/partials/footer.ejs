@@ -22,8 +22,8 @@
                     <a href="<%= config.footer.social_links.discord %>" class="social-link shine-effect">
                         <i class="fab fa-discord"></i>
                     </a>
-                    <a href="<%= config.footer.social_links.twitter %>" class="social-link shine-effect">
-                        <i class="fab fa-twitter"></i>
+                    <a href="<%= config.footer.social_links.Youtube %>" class="social-link shine-effect">
+                        <i class="fab fa-youtube"></i>
                     </a>
                 </div>
             </div>
@@ -31,6 +31,7 @@
     </div>
     
     <div class="footer-bottom">
-        <p>© <%= new Date().getFullYear() %> <%= config.footer.company_name %>. All rights reserved.</p>
+        <div class="copyright">© 2023 - <%= new Date().getFullYear() %> <%= config.footer.company_name %></div>
+        <div class="version">v<%= version %></div>
     </div>
 </footer>

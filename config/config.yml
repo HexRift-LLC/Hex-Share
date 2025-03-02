@@ -1,13 +1,16 @@
+auth:
+  key: "XXXX-XXXX-XXXX-XXXX-XXXX"
+  
 server:
   port: 3000
   host: "localhost"
   session_secret: "your-session-secret"
 
 database:
-  mongodb_uri: "mongodb://localhost:27017/hex-share"
+  mongodb_uri: "mongodb://localhost:27017/Hex-Share"
 
 discord:
-  bot_token: "Yout Bot Token"
+  bot_token: "Your Bot Token"
   client_id: "Your Client ID"
   client_secret: "Your Client Secret"
   callback_url: "http://localhost:3000/auth/discord/callback"
@@ -24,20 +27,43 @@ storage:
     - "application/pdf"
     - "application/zip"
     - "text/*"
+tiers:
+  premium:
+    name: "Premium Elite"
+    icon: "fa-crown"
+    storage_limit: 10737418240 # 10GB
+    badge_class: "premium-badge"
+    users:
+      - "Your Discord ID"
+  
+  standard:
+    name: "Standard Plus"
+    icon: "fa-star"
+    storage_limit: 5368709120 # 5GB
+    badge_class: "standard-badge"
+    users:
+      - "Your Discord ID"
+  
+  free:
+    name: "Free User"
+    icon: "fa-user"
+    storage_limit: 1073741824 # 1GB
+    badge_class: "free-badge"
+    users: [] # Empty array means all other users default to free tier
 
-admin:
-  default_admin_ids:
-    - "392855285263499274"
+analytics:
+  google:
+    enabled: true
+    tracking_id: "G-XXXXXXXXXX"
 
-# Footer Configuration
 footer:
   company_name: "Hex Share"
-  tagline: "Next-Gen File Sharing"
+  tagline: "Your Next-Gen File Sharing Solution"
   social_links:
-    github: "https://github.com/Hexarion1"
-    discord: "https://discord.gg/yourserver"
-    twitter: "https://twitter.com/youraccount"
+    github: "https://hexarion.net/github"
+    discord: "https://hexarion.net/discord"
+    YourTube: "https://hexarion.net/youtube"
   links:
-    privacy: "/privacy"
-    terms: "/terms"
-    contact: "/contact"
+    privacy: "https://hexarion.net/privacy-policy"
+    terms: "https://hexarion.net/tos"
+    contact: "https://hexarion.net/discord"

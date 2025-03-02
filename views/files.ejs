@@ -33,13 +33,6 @@
                             Files
                         </button>
                         
-                        <% if (config.admin.default_admin_ids.includes(user.discordId)) { %>
-                            <button class="nav-btn shine-effect" onclick="window.location.href='/admin'">
-                                <i class="fas fa-shield-alt"></i>
-                                Admin Panel
-                            </button>
-                        <% } %>
-                        
                         <button class="nav-btn shine-effect" onclick="window.location.href='/auth/logout'">
                             <i class="fas fa-sign-out-alt"></i>
                             Logout
@@ -47,7 +40,9 @@
                     </div>
                 </div>
             </nav>
+
             <div id="notification-container"></div>
+
             <div class="dashboard-header glass-effect">
                 <div class="welcome-section">
                     <span class="greeting-tag shine-effect">File Management</span>
@@ -99,8 +94,10 @@
                 <% }) %>
             </div>
         </div>
-    </div> 
+    </div>
+
     <%- include('partials/footer') %>
+    
     <script src="/js/files.js"></script>
     <script src="/js/particles.js"></script>
     <script src="/js/notifications.js"></script>
@@ -115,6 +112,16 @@
         
             mobileMenuBtn.addEventListener('click', toggleMobileMenu);
         });
-        </script>          
+    </script>
+        <% if (config.analytics.google.enabled) { %>
+            <!-- Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=<%= config.analytics.google.tracking_id %>"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '<%= config.analytics.google.tracking_id %>');
+            </script>
+        <% } %>
 </body>
 </html>

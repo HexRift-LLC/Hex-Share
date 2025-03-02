@@ -20,6 +20,7 @@
                     <p>This file has been shared with you</p>
                 </div>
             </div>
+
             <div id="notification-container"></div>
 
             <div class="shared-content">
@@ -52,7 +53,9 @@
             </div>
         </div>
     </div>
+
     <%- include('partials/footer') %>
+    
     <script src="/js/notifications.js"></script>
     <script src="/js/particles.js"></script>
     <script>
@@ -61,6 +64,15 @@
             window.location.href = `/files/download/${fileId}`;
         }
     </script>
-    
+        <% if (config.analytics.google.enabled) { %>
+            <!-- Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=<%= config.analytics.google.tracking_id %>"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '<%= config.analytics.google.tracking_id %>');
+            </script>
+        <% } %>
 </body>
 </html>

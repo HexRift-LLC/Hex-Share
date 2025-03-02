@@ -1,17 +1,18 @@
 {
-  "name": "hex-share-2.0",
+  "name": "hex-share",
   "version": "1.0.0",
-  "description": "",
+  "description": "Hex Share Your Next-Gen File Sharing Solutions",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
-  "author": "",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "author": "Hexarion",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.8.1",
     "chalk": "^4.1.2",
+    "colors": "^1.4.0",
     "connect-mongo": "^5.1.0",
     "discord.js": "^14.18.0",
     "ejs": "^3.1.10",
@@ -24,5 +25,8 @@
     "passport": "^0.7.0",
     "passport-discord": "^0.1.4",
     "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "javascript-obfuscator": "^4.1.1"
   }
 }
