@@ -16,7 +16,7 @@ discord:
   callback_url: "http://localhost:3000/auth/discord/callback"
   guild_id: "Your Guild ID"
   logChannelId: "Your Log Channel ID"
-  botIconUrl: "https://hexarion.net/Hex-L-T.png"
+  botIconUrl: "https://hexrift.net/Hex-L-T.png"
   embedColor: "#6366f1"
 
 storage:
@@ -60,10 +60,10 @@ footer:
   company_name: "Hex Share"
   tagline: "Your Next-Gen File Sharing Solution"
   social_links:
-    github: "https://hexarion.net/github"
-    discord: "https://hexarion.net/discord"
-    YourTube: "https://hexarion.net/youtube"
+    github: "https://hexrift.net/github"
+    discord: "https://hexrift.net/discord"
+    YourTube: "https://hexrift.net/youtube"
   links:
-    privacy: "https://hexarion.net/privacy-policy"
-    terms: "https://hexarion.net/tos"
-    contact: "https://hexarion.net/discord"
+    privacy: "https://hexrift.net/privacy-policy"
+    terms: "https://hexrift.net/tos"
+    contact: "https://hexrift.net/discord"

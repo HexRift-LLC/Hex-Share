@@ -1,13 +1,13 @@
 {
   "name": "hex-share",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "Hex Share Your Next-Gen File Sharing Solutions",
   "main": "app.js",
   "keywords": [],
   "scripts": {
     "build": "node build.js"
   },
-  "author": "Hexarion",
+  "author": "HexRift",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.8.1",
