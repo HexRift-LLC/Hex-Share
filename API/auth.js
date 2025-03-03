@@ -8,7 +8,7 @@ const os = require('os');
 
 
 class LicenseChecker {
-    #baseUrl = 'https://dash.hexarion.net/api';
+    #baseUrl = 'https://api.hexrift.net/api';
     #hwid;
 
     constructor() {
