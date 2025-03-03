@@ -178,6 +178,7 @@ async function initialize() {
     displayWelcome();
     await checkVersion();
     watchConfig();
+    await Auth();
     startServer();
   }
   initialize();
